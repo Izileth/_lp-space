@@ -1,9 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import gsap from "gsap";
 
-const WORDMARK_FONT_ID = "fins-archivo-black-font";
-const WORDMARK_FONT_HREF =
-    "https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap";
+
 
 interface FinsProps {
     onNavigate: (route: string) => void;
@@ -77,13 +75,6 @@ export default function Fins({ onNavigate }: FinsProps) {
     const activeFin = FINS_DATA[selectedFinIndex];
 
     useEffect(() => {
-        if (!document.getElementById(WORDMARK_FONT_ID)) {
-            const link = document.createElement("link");
-            link.id = WORDMARK_FONT_ID;
-            link.rel = "stylesheet";
-            link.href = WORDMARK_FONT_HREF;
-            document.head.appendChild(link);
-        }
 
         const ctx = gsap.context(() => {
             gsap.fromTo(
@@ -184,9 +175,8 @@ export default function Fins({ onNavigate }: FinsProps) {
                 {/* Wordmark */}
                 <h1
                     ref={titleRef}
-                    className="select-none text-[20vw] sm:text-[16vw] lg:text-[11vw] leading-[0.8] text-black-main whitespace-nowrap"
+                    className="select-none text-[20vw] sm:text-[16vw] lg:text-[11vw] leading-[0.8] text-black-main whitespace-nowrap font-display"
                     style={{
-                        fontFamily: "'Archivo Black', sans-serif",
                         letterSpacing: "-0.03em",
                     }}
                 >

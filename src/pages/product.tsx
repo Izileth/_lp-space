@@ -1,8 +1,6 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
-const WORDMARK_FONT_ID = "hero-yeezy-archivo-black-font";
-const WORDMARK_FONT_HREF =
-    "https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap";
+
 
 interface HeroYeezyProps {
     /** URL da imagem do produto (tênis). Se ausente, mostra um placeholder. */
@@ -23,14 +21,7 @@ export default function HeroYeezy({
     const decreaseSize = () => setSize((s) => Math.max(3.5, s - 0.5));
     const increaseSize = () => setSize((s) => Math.min(13, s + 0.5));
 
-    useEffect(() => {
-        if (document.getElementById(WORDMARK_FONT_ID)) return;
-        const link = document.createElement("link");
-        link.id = WORDMARK_FONT_ID;
-        link.rel = "stylesheet";
-        link.href = WORDMARK_FONT_HREF;
-        document.head.appendChild(link);
-    }, []);
+
 
     return (
         <section className="relative w-full min-h-screen bg-ivory text-black-main overflow-hidden">
@@ -89,9 +80,8 @@ export default function HeroYeezy({
 
                 {/* Wordmark */}
                 <h1
-                    className="select-none text-[20vw] sm:text-[16vw] lg:text-[11vw] leading-[0.8] text-black-main whitespace-nowrap"
+                    className="select-none text-[20vw] sm:text-[16vw] lg:text-[11vw] leading-[0.8] text-black-main whitespace-nowrap font-display"
                     style={{
-                        fontFamily: "'Archivo Black', sans-serif",
                         letterSpacing: "-0.03em",
                     }}
                 >

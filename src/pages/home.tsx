@@ -1,7 +1,6 @@
-import React, { useRef, useMemo } from "react";
+import React, { useRef } from "react";
 import type { Route } from "../types";
-import { useFloatingPills } from "../hooks/useFloatingPills";
-import { usePageEntrance } from "../hooks/usePageEntrance";
+import { usePageAnimations } from "../hooks/usePageAnimations";
 import PageLayout from "../components/templates/PageLayout";
 import FloatingPill from "../components/atoms/FloatingPill";
 import Button from "../components/atoms/Button";
@@ -13,67 +12,18 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
     const heroRef = useRef<HTMLDivElement>(null);
-    const titleRef = useRef<HTMLHeadingElement>(null);
 
-    // Apply floating animations to pills
-    useFloatingPills(heroRef);
-
-    // Entrance GSAP animation config
-    const entranceAnimations = useMemo(
-        () => [
-            {
-                target: titleRef,
-                from: { y: 60, opacity: 0 },
-                to: { y: 0, opacity: 1, duration: 1.2, ease: "power4.out" },
-            },
-            {
-                target: ".hero-subtitle",
-                from: { y: 20, opacity: 0 },
-                to: { y: 0, opacity: 1, duration: 0.8, delay: 0.3, ease: "power3.out" },
-            },
-            {
-                target: ".hero-cta",
-                from: { y: 20, opacity: 0 },
-                to: { y: 0, opacity: 1, duration: 0.8, delay: 0.4, ease: "power3.out" },
-            },
-            {
-                target: ".showcase-card",
-                from: { y: 40, opacity: 0 },
-                to: {
-                    y: 0,
-                    opacity: 1,
-                    duration: 0.8,
-                    stagger: 0.15,
-                    delay: 0.5,
-                    ease: "power3.out",
-                },
-            },
-            {
-                target: ".tech-item",
-                from: { opacity: 0, y: 30 },
-                to: {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    stagger: 0.1,
-                    delay: 0.7,
-                    ease: "power3.out",
-                },
-            },
-        ],
-        []
-    );
-
-    usePageEntrance(heroRef, entranceAnimations);
+    // Apply floating animations and transitions to all items using standard semantic selectors
+    usePageAnimations(heroRef);
 
     return (
         <PageLayout onNavigate={onNavigate} currentRoute="home" showFooterLinks={true}>
             <div ref={heroRef} className="relative flex-1 flex flex-col items-center">
                 {/* Decorative floating pills */}
-                <FloatingPill className="left-[8%] top-[15%] w-12 h-7 rotate-[-15deg]" />
-                <FloatingPill className="left-[22%] top-[8%] w-8 h-5 rotate-[20deg] blur-[1px]" />
-                <FloatingPill className="right-[10%] top-[12%] w-14 h-8 rotate-[30deg]" />
-                <FloatingPill className="right-[24%] bottom-[30%] w-10 h-6 rotate-[-8deg] blur-[1px]" />
+                <FloatingPill className="left-[8%] top-[15%] w-12 h-7 rotate-[-15deg] floating-pill" />
+                <FloatingPill className="left-[22%] top-[8%] w-8 h-5 rotate-[20deg] blur-[1px] floating-pill" />
+                <FloatingPill className="right-[10%] top-[12%] w-14 h-8 rotate-[30deg] floating-pill" />
+                <FloatingPill className="right-[24%] bottom-[30%] w-10 h-6 rotate-[-8deg] blur-[1px] floating-pill" />
 
                 {/* ================= HERO SECTION ================= */}
                 <section className="w-full max-w-7xl px-6 pt-12 pb-24 md:py-32 flex flex-col items-center text-center relative overflow-hidden">
@@ -84,23 +34,22 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                         </span>
                     </div>
 
-                    <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-sec mb-4 hero-subtitle">
+                    <span className="text-[10px] font-bold tracking-[0.25em] uppercase text-gray-sec mb-4 anim-fade-up">
                         ADVANCED PERFORMANCE STUDIO
                     </span>
 
                     <h1
-                        ref={titleRef}
-                        className="text-[10vw] sm:text-[8vw] lg:text-[7vw] leading-[0.9] text-black-main font-display font-black mb-8 max-w-5xl tracking-tight"
+                        className="text-[10vw] sm:text-[8vw] lg:text-[7vw] leading-[0.9] text-black-main font-display font-black mb-8 max-w-5xl tracking-tight anim-title"
                     >
                         SPEED &amp; FLUIDITY. <br className="hidden sm:inline" />
                         REDEFINING MOVEMENT.
                     </h1>
 
-                    <p className="text-sm sm:text-base text-gray-sec max-w-xl mb-10 leading-relaxed hero-subtitle">
+                    <p className="text-sm sm:text-base text-gray-sec max-w-xl mb-10 leading-relaxed anim-fade-up">
                         Designing high-performance footwear and premium carbon fiber surfboard fins. Engineered for speed, built for control, and inspired by fluid dynamics.
                     </p>
 
-                    <div className="flex flex-wrap justify-center gap-4 hero-cta">
+                    <div className="flex flex-wrap justify-center gap-4 anim-fade-up">
                         <Button
                             onClick={() => onNavigate("product")}
                             variant="primary"
@@ -122,7 +71,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <section className="w-full max-w-7xl px-6 py-16 border-t border-border-main">
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Sneaker Showcase */}
-                        <div className="showcase-card group relative bg-card-bg border border-border-main rounded-2xl p-8 sm:p-12 overflow-hidden flex flex-col justify-between min-h-[500px] transition-all duration-500 hover:shadow-xl hover:border-black-main">
+                        <div className="showcase-card anim-stagger group relative bg-card-bg border border-border-main rounded-2xl p-8 sm:p-12 overflow-hidden flex flex-col justify-between min-h-[500px] transition-all duration-500 hover:shadow-xl hover:border-black-main">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-radial from-black-main/5 to-transparent rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-all duration-700"></div>
                             
                             <div>
@@ -162,7 +111,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                         </div>
 
                         {/* Fins Showcase */}
-                        <div className="showcase-card group relative bg-card-bg border border-border-main rounded-2xl p-8 sm:p-12 overflow-hidden flex flex-col justify-between min-h-[500px] transition-all duration-500 hover:shadow-xl hover:border-black-main">
+                        <div className="showcase-card anim-stagger group relative bg-card-bg border border-border-main rounded-2xl p-8 sm:p-12 overflow-hidden flex flex-col justify-between min-h-[500px] transition-all duration-500 hover:shadow-xl hover:border-black-main">
                             <div className="absolute top-0 right-0 w-64 h-64 bg-radial from-black-main/5 to-transparent rounded-full blur-2xl pointer-events-none group-hover:scale-150 transition-all duration-700"></div>
 
                             <div>
@@ -212,7 +161,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                 <section className="w-full max-w-7xl px-6 py-20 border-t border-border-main">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
                         {/* Block 1 */}
-                        <div className="tech-item flex flex-col gap-4">
+                        <div className="tech-item anim-stagger flex flex-col gap-4">
                             <span className="text-3xl font-display font-black text-black-main/20">01</span>
                             <h4 className="text-lg font-bold text-black-main font-display uppercase tracking-wider">
                                 Fluid Dynamics
@@ -223,7 +172,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                         </div>
 
                         {/* Block 2 */}
-                        <div className="tech-item flex flex-col gap-4">
+                        <div className="tech-item anim-stagger flex flex-col gap-4">
                             <span className="text-3xl font-display font-black text-black-main/20">02</span>
                             <h4 className="text-lg font-bold text-black-main font-display uppercase tracking-wider">
                                 Precision Tooling
@@ -234,7 +183,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                         </div>
 
                         {/* Block 3 */}
-                        <div className="tech-item flex flex-col gap-4">
+                        <div className="tech-item anim-stagger flex flex-col gap-4">
                             <span className="text-3xl font-display font-black text-black-main/20">03</span>
                             <h4 className="text-lg font-bold text-black-main font-display uppercase tracking-wider">
                                 High Resiliency
